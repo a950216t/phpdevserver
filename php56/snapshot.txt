@@ -1,9 +1,9 @@
 This snapshot was automatically generated on
-Wed, 25 Oct 2017 23:23:22 +0000
+Wed, 09 Jan 2019 23:34:35 +0000
 
-Version: 5.6.32
+Version: 5.6.40
 Branch: HEAD
-Build: C:\php-sdk\php56\vc11\x64\obj\Release
+Build: C:\php-sdk\php56\vc11\x86\obj\Release
 
 Built-in Extensions
 ===========================
@@ -73,9 +73,9 @@ Module: php_com_dotnet.dll
 Module: php_curl.dll
 ===========================
 	libssh2.dll
+	normaliz.dll
 	libeay32.dll
 	ssleay32.dll
-	normaliz.dll
 	msvcr110.dll
 
 Module: php_enchant.dll
@@ -165,8 +165,8 @@ Module: php_sqlite3.dll
 
 Module: php_sybase_ct.dll
 ===========================
-	libsybcs64.dll
-	libsybct64.dll
+	libsybcs.dll
+	libsybct.dll
 	msvcr110.dll
 
 Module: php_tidy.dll

@@ -1,9 +1,9 @@
 This snapshot was automatically generated on
-Wed, 20 Jul 2016 18:38:46 +0000
+Wed, 20 Jul 2016 18:37:30 +0000
 
 Version: 5.5.38
 Branch: HEAD
-Build: C:\php-sdk\php55\vc11\x64\obj\Release
+Build: C:\php-sdk\php55\vc11\x86\obj\Release
 
 Built-in Extensions
 ===========================
@@ -161,8 +161,8 @@ Module: php_sqlite3.dll
 
 Module: php_sybase_ct.dll
 ===========================
-	libsybcs64.dll
-	libsybct64.dll
+	libsybcs.dll
+	libsybct.dll
 	msvcr110.dll
 
 Module: php_tidy.dll
