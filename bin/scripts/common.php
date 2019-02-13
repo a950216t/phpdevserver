@@ -76,6 +76,22 @@ function confirm($message , $yes = 'y' , $no = 'n' , $ignore_case = true) {
 
 
 function config_apache_php_module($PHPDEVSERVER_PATH , $php_version){
+
+	$imagick_version = "";
+
+	switch($php_version) {
+		case "php70":
+		case "php71":
+			$imagick_version = "6.9.3-7-vc14-x64";
+		break;
+		case "php72":
+		case "php73":
+			$imagick_version = "7.0.7-11-vc15-x64";
+		break;
+		default:
+			$imagick_version = "6.9.3-7-vc11-x86";
+	}
+	
     $conf_file = "{$PHPDEVSERVER_PATH}/Apache24/conf.d/50-php.conf";
     preg_replace_file(
             $conf_file ,
@@ -91,7 +107,7 @@ function config_apache_php_module($PHPDEVSERVER_PATH , $php_version){
     preg_replace_file(
             $conf_file ,
             "/FcgidInitialEnv.*MAGICK_HOME.*/i",
-            "FcgidInitialEnv MAGICK_HOME " . "\"" . cpath("{$PHPDEVSERVER_PATH}/ImageMagick/bin") . "\""
+            "FcgidInitialEnv MAGICK_HOME " . "\"" . cpath("{$PHPDEVSERVER_PATH}/ImageMagick/{$imagick_version}/bin") . "\""
     );
 
     preg_replace_file(

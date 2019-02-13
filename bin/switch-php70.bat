@@ -1,5 +1,5 @@
 @echo off
-REM Switch PHP to PHP 5.5
+REM Switch PHP to PHP 7.0
 
 :: BatchGotAdmin
 :-------------------------------------

@@ -5,13 +5,6 @@ $PHPDEVSERVER_HOME = dirname(dirname(dirname(__FILE__)));
 echo "** Auto Config phpdevserver **" . PHP_EOL . PHP_EOL;
 // copy all template config file
 echo "Configuring PHP default settings ... ";
-// copy php55 php.ini
-if(false === file_exists("{$PHPDEVSERVER_HOME}/php55/php.ini")) {
-    copy("{$PHPDEVSERVER_HOME}/php55/php.ini-development" ,"{$PHPDEVSERVER_HOME}/php55/php.ini" );
-}
-// copy php55 config file
-copyfolder("{$PHPDEVSERVER_HOME}/bin/scripts/templates/php55" , "{$PHPDEVSERVER_HOME}/php55");
-
 
 // copy php56 php.ini
 if(false === file_exists("{$PHPDEVSERVER_HOME}/php56/php.ini")) {
@@ -36,15 +29,59 @@ if(false === file_exists("{$PHPDEVSERVER_HOME}/php71/php.ini")) {
 copyfolder("{$PHPDEVSERVER_HOME}/bin/scripts/templates/php71" , "{$PHPDEVSERVER_HOME}/php71");
 
 
+// copy php72 php.ini
+if(false === file_exists("{$PHPDEVSERVER_HOME}/php72/php.ini")) {
+    copy("{$PHPDEVSERVER_HOME}/php72/php.ini-development" ,"{$PHPDEVSERVER_HOME}/php72/php.ini" );
+}
+// copy php72 config file
+copyfolder("{$PHPDEVSERVER_HOME}/bin/scripts/templates/php72" , "{$PHPDEVSERVER_HOME}/php72");
+
+// copy php73 php.ini
+if(false === file_exists("{$PHPDEVSERVER_HOME}/php73/php.ini")) {
+    copy("{$PHPDEVSERVER_HOME}/php73/php.ini-development" ,"{$PHPDEVSERVER_HOME}/php73/php.ini" );
+}
+// copy php73 config file
+copyfolder("{$PHPDEVSERVER_HOME}/bin/scripts/templates/php73" , "{$PHPDEVSERVER_HOME}/php73");
+
+// replace ioncube loader path
+echo "Configuring PHP ioncube loader module ... ";
+$ini_file = array(
+	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ioncube_loader_win_5.6.dll" ,
+	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ioncube_loader_win_5.6.dll" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/ioncube_loader_win_7.0.dll" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/ioncube_loader_win_7.0.dll" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/ioncube_loader_win_7.1.dll" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/ioncube_loader_win_7.1.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/ioncube_loader_win_7.2.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/ioncube_loader_win_7.2.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.cli.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php73/ext/ioncube_loader_win_7.3.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.apache.d/10-ioncube.ini"    => "{$PHPDEVSERVER_HOME}/php73/ext/ioncube_loader_win_7.3.dll"
+);
+
+foreach($ini_file as $k => $v) {
+    preg_replace_file(
+	$k ,
+	'/zend_extension.*=.*/i',
+	"zend_extension = " . realpath($v) . PHP_EOL
+    );
+}
+echo "OK" . PHP_EOL;
+
 // replace zend-opecache path
 echo "Configuring PHP zend-opcache module ... ";
 $ini_file = array(
-	"{$PHPDEVSERVER_HOME}/php55/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php55/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/php_opcache.dll" ,
 	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/php_opcache.dll" ,
 	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/php_opcache.dll" ,
 	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.cli.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php73/ext/php_opcache.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.apache.d/10-opcache.ini"    => "{$PHPDEVSERVER_HOME}/php73/ext/php_opcache.dll"
 );
-        
+
 foreach($ini_file as $k => $v) {
     preg_replace_file(
 	$k ,
@@ -57,20 +94,43 @@ echo "OK" . PHP_EOL;
 // replace xdebug path
 echo "Configuring PHP xdebug module ... ";
 $ini_file = array(
-	"{$PHPDEVSERVER_HOME}/php55/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php55/ext/php_xdebug.dll" ,
-	"{$PHPDEVSERVER_HOME}/php55/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php55/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php56/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php70/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php71/ext/php_xdebug.dll" ,
 	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/php_xdebug.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php72/ext/php_xdebug.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/php_xdebug.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.cli.d/11-xdebug.ini"       => "{$PHPDEVSERVER_HOME}/php73/ext/php_xdebug.dll" ,
+	"{$PHPDEVSERVER_HOME}/php73/conf.apache.d/11-xdebug.ini"    => "{$PHPDEVSERVER_HOME}/php73/ext/php_xdebug.dll"
 );
 foreach($ini_file as $k => $v) {
 	preg_replace_file(
 		$k ,
 		'/zend_extension.*=.*/i',
 		"zend_extension = " . realpath($v) . PHP_EOL
+	);
+}
+echo "OK" . PHP_EOL;
+
+// replace sourceguardian path
+echo "Configuring PHP sourceguardian module ... ";
+$ini_file = array(
+	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win.dll" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win.dll"
+);
+foreach($ini_file as $k => $v) {
+	preg_replace_file(
+		$k ,
+		'/extension.*=.*/i',
+		"extension = " . realpath($v) . PHP_EOL
 	);
 }
 echo "OK" . PHP_EOL;
@@ -176,10 +236,10 @@ putenv(
     . ";{$PHPDEVSERVER_HOME}\\bash"
     . ";{$PHPDEVSERVER_HOME}\\Apache24\\bin"
     . ";{$PHPDEVSERVER_HOME}\\bin"
-    . ";{$PHPDEVSERVER_HOME}\\ImageMagick\\bin"
+    . ";{$PHPDEVSERVER_HOME}\\ImageMagick\\6.9.3-7-vc11-x86\\bin"
 );
 putenv("PHP_INI_SCAN_DIR={$PHPDEVSERVER_HOME}\\" . getenv("PHPDEVSERVER_PHP_VERSION") .'\conf.cli.d' );
-putenv("MAGICK_HOME={$PHPDEVSERVER_HOME}\\ImageMagick\\bin");
+putenv("MAGICK_HOME={$PHPDEVSERVER_HOME}\\ImageMagick\\6.9.3-7-vc11-x86\\bin");
 
 // $registry->write('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PHPDEVSERVER_PHP_VERSION' , getenv("PHPDEVSERVER_PHP_VERSION") , "REG_SZ");
 // $registry->write('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\PHPDEVSERVER_PATH' , getenv("PHPDEVSERVER_PATH") , "REG_EXPAND_SZ");
