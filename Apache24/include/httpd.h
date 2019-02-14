@@ -577,6 +577,10 @@ AP_DECLARE(const char *) ap_get_server_built(void);
                                     ((x) == HTTP_INTERNAL_SERVER_ERROR) || \
                                     ((x) == HTTP_SERVICE_UNAVAILABLE) || \
                                     ((x) == HTTP_NOT_IMPLEMENTED))
+
+/** does the status imply header only response (i.e. never w/ a body)? */
+#define AP_STATUS_IS_HEADER_ONLY(x) ((x) == HTTP_NO_CONTENT || \
+                                     (x) == HTTP_NOT_MODIFIED)
 /** @} */
 
 /**
@@ -1208,7 +1212,9 @@ typedef enum  {
     CONN_STATE_SUSPENDED,
     CONN_STATE_LINGER,          /* connection may be closed with lingering */
     CONN_STATE_LINGER_NORMAL,   /* MPM has started lingering close with normal timeout */
-    CONN_STATE_LINGER_SHORT     /* MPM has started lingering close with short timeout */
+    CONN_STATE_LINGER_SHORT,    /* MPM has started lingering close with short timeout */
+
+    CONN_STATE_NUM              /* Number of states (keep/kept last) */
 } conn_state_e;
 
 typedef enum  {
@@ -2373,7 +2379,7 @@ AP_DECLARE(int) ap_array_str_contains(const apr_array_header_t *array,
                                       const char *s);
 
 /**
- * Perform a case-insensitive comparison of two strings @a atr1 and @a atr2,
+ * Perform a case-insensitive comparison of two strings @a str1 and @a str2,
  * treating upper and lower case values of the 26 standard C/POSIX alphabetic
  * characters as equivalent. Extended latin characters outside of this set
  * are treated as unique octets, irrespective of the current locale.
@@ -2387,7 +2393,7 @@ AP_DECLARE(int) ap_array_str_contains(const apr_array_header_t *array,
 AP_DECLARE(int) ap_cstr_casecmp(const char *s1, const char *s2);
 
 /**
- * Perform a case-insensitive comparison of two strings @a atr1 and @a atr2,
+ * Perform a case-insensitive comparison of two strings @a str1 and @a str2,
  * treating upper and lower case values of the 26 standard C/POSIX alphabetic
  * characters as equivalent. Extended latin characters outside of this set
  * are treated as unique octets, irrespective of the current locale.

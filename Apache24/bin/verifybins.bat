@@ -29,13 +29,18 @@ goto endofperl
   chomp @content;
   my ($j,$Pfile)=split(/=/,$content[0]);
   my ($j,$Paver)=split(/=/,$content[1]);
-  my ($j,$Pover)=split(/=/,$content[2]);
+  if ($content[2] =~ /^LIBRESSLVERSION/) {
+    my ($j,$PLver)=split(/=/,$content[2]);
+  } else {
+    my ($j,$Pover)=split(/=/,$content[2]);
+  }
   system("CLS");
   print "\n\n  ** Apachehaus Binary File Verifier **\n\n";
   print "  Verifying files for\n";
   print "  Apache Haus Package: ".$Pfile."\n";
   print "  Apache Version:      ".$Paver."\n";
-  print "  OpenSSL Version:     ".$Pover."\n\n";
+  print "  OpenSSL Version:     ".$Pover."\n\n" if $Pover;
+  print "  LibreSSL Version:    ".$Plver."\n\n" if $Plver;
 
   my $fl = @content;
   for ($i=3;$i<$fl;$i++) {
@@ -60,7 +65,7 @@ goto endofperl
   print "\n  ** Verification Complete **\n     ";
   print $FAIL." files failed verification\n\n";
  
-  print "\n  Press any key to exit.";
+  print "\n  Press ENTER key to exit.";
   $junk=getc();  print "\n";
   exit;
 
