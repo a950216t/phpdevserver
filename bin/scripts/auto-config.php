@@ -117,14 +117,14 @@ echo "OK" . PHP_EOL;
 // replace sourceguardian path
 echo "Configuring PHP sourceguardian module ... ";
 $ini_file = array(
-	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win.dll" ,
-	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win.dll"
+	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win" ,
+	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ixed.5.6.win" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win" ,
+	"{$PHPDEVSERVER_HOME}/php70/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php70/ext/ixed.7.0.win" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win" ,
+	"{$PHPDEVSERVER_HOME}/php71/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php71/ext/ixed.7.1.win" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.cli.d/88-sourceguardian.ini"       => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win" ,
+	"{$PHPDEVSERVER_HOME}/php72/conf.apache.d/88-sourceguardian.ini"    => "{$PHPDEVSERVER_HOME}/php72/ext/ixed.7.2.win"
 );
 foreach($ini_file as $k => $v) {
 	preg_replace_file(
