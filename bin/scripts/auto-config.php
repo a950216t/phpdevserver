@@ -91,6 +91,22 @@ foreach($ini_file as $k => $v) {
 }
 echo "OK" . PHP_EOL;
 
+// replace zendguardloader path
+echo "Configuring PHP zendguardloader module ... ";
+$ini_file = array(
+	"{$PHPDEVSERVER_HOME}/php56/conf.cli.d/12-ZendGuardLoader.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ZendLoader.dll" ,
+	"{$PHPDEVSERVER_HOME}/php56/conf.apache.d/12-ZendGuardLoader.ini"    => "{$PHPDEVSERVER_HOME}/php56/ext/ZendLoader.dll"
+);
+
+foreach($ini_file as $k => $v) {
+    preg_replace_file(
+	$k ,
+	'/zend_extension.*=.*/i',
+	"zend_extension = " . realpath($v) . PHP_EOL
+    );
+}
+echo "OK" . PHP_EOL;
+
 // replace xdebug path
 echo "Configuring PHP xdebug module ... ";
 $ini_file = array(
